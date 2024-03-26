@@ -7,6 +7,8 @@ preferably, texts from the same person, the longer the better
         this would ensure same author
         and we could test it like i want it to
         - [ ] insert into csv with author, text
+            - [ ] write script to organize it into let's say 250 words
+            with ",author" at the end
         - [ ] add data from different authors
 
 # Training

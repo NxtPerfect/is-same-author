@@ -1,8 +1,6 @@
-import torch
-from torch.utils.data import Dataset, DataLoader
-from torchvision import transforms, utils
+import tensorflow as tf
 
-class SameAuthorDataset(Dataset):
+class SameAuthorDataset(tf.data.Dataset):
     """Same Author dataset."""
 
     def __init__(self):
