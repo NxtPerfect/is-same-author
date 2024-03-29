@@ -1,14 +1,16 @@
 # Data
 - [/] find dataset with text and author listed
 preferably, texts from the same person, the longer the better
-    - [ ] wikipedia articles?
-    - [ ] or scrape websites for it
     - [/] scrape text from book?
         this would ensure same author
         and we could test it like i want it to
-        - [ ] insert into csv with author, text
-            - [ ] write script to organize it into let's say 250 words
+        - [/] insert into csv with author, text
+            - [ ] write script to organize it into 50 words
             with ",author" at the end
+            if line is too short
+            add it to list and then if next line makes it > 50, split at next . ! ?
+            and write to file at first line from stack, then remove the ones we used
+            to make it longer
         - [ ] add data from different authors
 
 # Training
