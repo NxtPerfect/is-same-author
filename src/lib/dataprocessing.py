@@ -53,4 +53,4 @@ def run(path: str, output: str, author: str, maxWords=50):
         print("\nFinished!")
 
 if __name__ == "__main__":
-    run("data.bak/sample2.csv", "data.bak/output.csv", "Dale Carnegie")
+    run("data.bak/sample2.csv", "data.bak/output2.csv", "Dale Carnegie")
