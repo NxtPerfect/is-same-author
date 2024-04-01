@@ -37,7 +37,7 @@ def createDataset(sequences: str, labels: list):
     return dataset
 
 if __name__ == "__main__":
-    sampleData = loadDataFromCsv("data.bak/sample1.csv")
+    sampleData = loadDataFromCsv("data.bak/output2.csv")
     sampleDataFeatures = sampleData.copy()
     sampleDataLabels = sampleDataFeatures.pop('Text')
     

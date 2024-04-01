@@ -1,51 +1,56 @@
-"""Open file and read it line by line
-then if the line has more than 50 words, we insert comma, the author and new line
-if the line has less than that, we should remove new line from the end of it
-and add it to the next line, and divide it
+"""We're not handling the rest of the sentence
+it should be saved and used in the next iteration
 
-However, if we're reading it line by line, it won't ever have a new line in the end
-and we'll end up with 'line' being another line, which will never join them together
+We only insert space at the front, we don't get any remaining_line in there
+and our lines are too short"""
 
-One solution is to use stack, if line is shorter we add it in, then we join them together
-and change file at index of first line till last line to that one line we created
+import math
+import time
 
-additionally we're only finding . but we should also look for ! and ?"""
+def run(path: str, output: str, author: str, maxWords=50):
+    processed_text = ["Text;Author\n"]
+    remaining_line = ""
+    try:
+        print("Start.\nProcessing...")
+        with open(path, "r") as file:
+            for line in file:
+                # time.sleep(1)
+                print("Line: " + line)
+                line_with_remaining = remaining_line + " " + line
+                if remaining_line == '':
+                    line_with_remaining = line
+                i = -1
+                print(f"Counted {line_with_remaining.count(' ')} words and found {line_with_remaining.find('. ')}")
+                if line_with_remaining.count(' ') > maxWords and line_with_remaining.find(". ", 1):
+                    search_index = len(' '.join(line_with_remaining.split()[:50]))
+                    dot = line_with_remaining.find(". ", search_index)
+                    if dot == -1:
+                        dot = math.inf
+                    qmrk = line_with_remaining.find("? ", search_index)
+                    if qmrk == -1:
+                        qmrk = math.inf
+                    xclm = line_with_remaining.find("! ", search_index)
+                    if xclm == -1:
+                        xclm = math.inf
+                    i = min(dot, qmrk, xclm)
+                    print("Position is", i)
+                    if i == math.inf:
+                        remaining_line = line_with_remaining.strip(' \n')
+                        continue
+                    line_with_remaining = line_with_remaining.replace(";", ",")
+                    current_sentence = line_with_remaining[:i+1] + f";{author}\n"
+                    processed_text.append(current_sentence)
+                    print("Processed line.")
+                remaining_line = line_with_remaining[i+1:].strip(' \n')
+                print("Saving remaining line.")
+        processed_text.append(''.join([remaining_line, f";{author}"]))
+        with open(output, "a") as file:
+            for line in processed_text:
+                file.write(line)
+    except IOError as e:
+        print(e)
+    finally:
+        print("\nFinished!")
 
-# file = open("data.bak/sample1.csv", "r+")
-file = open("data.bak/test.csv", "r+")
-stack = []
-try:
-    data = file.readlines()
-    for idl, line in enumerate(data):
-        i = -1
-        # count how many words
-        # if more than 250 then put new line at next coma
-        if line.count(' ') >= 50 and line.find(",Timothy Ferris\n") != -1:
-            i = line.find(". ")
-            line = line[:i] + ",Timothy Ferriss\n" + line[i:]
-            data[idl] = line
-            print("Adding author at char " + str(i) + ".")
-            continue
-        # while stack is not empty
-        # then join lines
-        if line.find(",Timothy Ferris\n") != -1:
-            print("Found author " + str(idl+1))
-            print(line)
-            continue
-        if line.count(' ') < 50 and stack:
-            # check if line + lines from stack > 50
-            # then join them
-            # find . ! ? and split them there
-            # write first line to file at index of stack line
-            # if added to stack, remove from file
-            pass
-        if line.count(' ') < 50:
-            print("Line too short " + str(idl+1))
-            print(line)
-            stack.append((idl, line))
-            continue
-        print("Other type of error, maybe line too long " + str(idl+1))
-except IOError:
-    file.close()
-finally:
-    file.close()
+if __name__ == "__main__":
+    run("data.bak/sample2.csv", "data.bak/output.csv", "Dale Carnegie")
