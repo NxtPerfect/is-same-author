@@ -1,22 +1,24 @@
-import src.model
-import src.dataset
+import model
+import dataset
+import tensorflow as tf
 
 def train():
-    dataset = src.dataset.create("data.bak/output2.csv")
-    train_dataset, val_dataset = src.dataset.preprocess_data(dataset)
-    model = src.model.make()
+    data = dataset.create("data.bak/output2.csv")
+    train_dataset, val_dataset = dataset.preprocess_data("data.bak/output2.csv")
 
-    # Compile the model
-    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    m = model.make(dataset.num_sequences, dataset.sequence_length, dataset.embedding_dim)
 
-    # Train the model
-    history = model.fit(train_dataset, validation_data=val_dataset, epochs=10, batch_size=32)
+    # Compile and train the model
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    history = m.fit(train_dataset, validation_data=val_dataset, epochs=10, batch_size=32)
 
     # Evaluate the model
-    loss, accuracy = model.evaluate(val_dataset)
-
+    loss, accuracy = m.evaluate(val_dataset)
     print("Validation Loss:", loss)
     print("Validation Accuracy:", accuracy)
 
     # Save the model
-    model.save("model.h5")
+    m.save("model.h5")
+
+if __name__ == "__main__":
+    train()

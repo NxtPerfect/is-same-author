@@ -38,12 +38,12 @@ def run(path: str, output: str, author: str, maxWords=50):
                         remaining_line = line_with_remaining.strip(' \n')
                         continue
                     line_with_remaining = line_with_remaining.replace(";", ",")
-                    current_sentence = line_with_remaining[:i+1] + f";{author}\n"
+                    current_sentence = line_with_remaining[:i+1] + ";" + author + "\n"
                     processed_text.append(current_sentence)
                     print("Processed line.")
                 remaining_line = line_with_remaining[i+1:].strip(' \n')
                 print("Saving remaining line.")
-        processed_text.append(''.join([remaining_line, f";{author}"]))
+        processed_text.append(''.join([remaining_line, ";" + author]))
         with open(output, "a") as file:
             for line in processed_text:
                 file.write(line)
