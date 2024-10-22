@@ -17,8 +17,10 @@ preferably, texts from the same person, the longer the better
 - [x] load text, and author as training data
 
 # Model
-- [/] find appropriate activation function
-- [/] find model architecture
+- [x] find appropriate activation function
+    linear regression
+- [x] find model architecture
+- [/] output proper shape
 
 # Gui
 - [ ] text field to paste dataset
